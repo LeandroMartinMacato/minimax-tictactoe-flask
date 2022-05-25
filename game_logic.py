@@ -2,8 +2,6 @@ from copy import deepcopy
 from random import randint
 
 class GameLogic:
-    'Class used to keep track of the board and calculate computer moves'
-
     def __init__(self, player='X', computer='O'):
         self.player = player
         self.computer = computer
@@ -11,9 +9,7 @@ class GameLogic:
 
         self.board = [[self.empty for x in range(3)] for x in range(3)] # Create board 
 
-    # Calculate computer move based on minimax algorithm
     def calculate_move(self):
-        # if it's the computer's first turn, take one of the corners (much faster than calculating with recursion)
         if self.is_board_empty():
             move = self.random_corner()
             return {'row': move[0], 'col': move[1]}
@@ -26,8 +22,6 @@ class GameLogic:
         else:
             return {'row': move[1][0], 'col': move[1][1]}
 
-    # minimax algorithm (using alpha beta pruning to speed up) to calculate the best move for the computer
-    # assigning 1 for player win, 0 for draw, and -1 for computer win
     def minimax(self, mark, alpha, beta):
         # Check if the game is over and return assigned value if it is
         if self.has_won(self.player):
@@ -37,7 +31,7 @@ class GameLogic:
         elif self.tied():
             return [0, None]
 
-        # If it's the player's turn
+        # player's turn
         if mark == self.player:
             # Loop through available moves
             for move in self.get_moves():
